@@ -28,7 +28,7 @@ TEMPLATE = """
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>TaskFlow</title>
+  <title>TaskFlows</title>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body { font-family: Arial, sans-serif; background: #f0f2f5; padding: 32px 16px; color: #222; }
@@ -78,7 +78,7 @@ TEMPLATE = """
 </head>
 <body>
 <div class="wrap">
-  <h1>TaskFlow <span class="badge-layer">v2 layered</span></h1>
+  <h1>TaskFlow control <span class="badge-layer">v2 layered</span></h1>
   <p class="sub">Same features as v1. Different inside.</p>
 
   <!-- Architecture note — visible during demo -->
@@ -205,4 +205,4 @@ if __name__ == "__main__":
     print("    repository.py — all data storage")
     print("    models.py     — Task class + TaskFactory")
     print("    strategies_and_observers.py — patterns\n")
-    app.run(debug=True)
+    app.run(host="0.0.0.0", port=5000, debug=True)
