@@ -8,21 +8,21 @@ from flask import Flask, request, redirect, url_for, render_template_string
 from datetime import datetime
 
 import os
-# import json
-# TASKS_FILE = "tasks.json"
+import json
+TASKS_FILE = "tasks.json"
 
-# def load_tasks():
-#     if not os.path.exists(TASKS_FILE):
-#         return [], 1
+def load_tasks():
+     if not os.path.exists(TASKS_FILE):
+         return [], 1
     
-#     with open(TASKS_FILE) as f:
-#         data = json.load(f)
+     with open(TASKS_FILE) as f:
+         data = json.load(f)
 
-#     return data['tasks'], data['next_id']
+     return data['tasks'], data['next_id']
 
-# def save_tasks():
-#     with open(TASKS_FILE, 'w') as f:
-#          json.dump({'tasks': tasks, 'next_id': next_id}, f)
+def save_tasks():
+     with open(TASKS_FILE, 'w') as f:
+          json.dump({'tasks': tasks, 'next_id': next_id}, f)
 
 
 app = Flask(__name__)
@@ -165,13 +165,13 @@ def index():
     # ⚠️  LOGIC MIXED INTO ROUTE — filtering happens here in the route
 
     
-    if filter_by == "pending":
-        visible_tasks = [t for t in tasks if not t["done"]]
+    # if filter_by == "pending":
+    #    visible_tasks = [t for t in tasks if not t["done"]]
 
- #   if filter_by == "pending":
- #       visible_tasks = sorted(
-  #          [t for t in tasks if not t['done']], key=lambda t: PRIORITY_ORDER.get(t['priority'], 99)
-  #      )
+    if filter_by == "pending":
+        visible_tasks = sorted(
+            [t for t in tasks if not t['done']], key=lambda t: PRIORITY_ORDER.get(t['priority'], 99)
+        )
 
     elif filter_by == "done":
         visible_tasks = [t for t in tasks if t["done"]]
@@ -221,7 +221,7 @@ def add_task():
     }
     tasks.append(task)
     next_id += 1
-    #save_tasks()
+    save_tasks()
 
     return redirect(url_for("index"))
 
@@ -236,7 +236,7 @@ def complete_task(task_id):
             task["done"] = True
             break
     
-    #save_tasks()
+    save_tasks()
 
     return redirect(url_for("index"))
 
@@ -248,7 +248,7 @@ def delete_task(task_id):
     # ⚠️  DATA MUTATION IN ROUTE
     tasks = [t for t in tasks if t["id"] != task_id]
 
-    #save_tasks()
+    save_tasks()
 
     return redirect(url_for("index"))
 
@@ -278,7 +278,7 @@ def seed():
 if __name__ == "__main__":
     seed()
     
-    # tasks, next_id = load_tasks()
+    tasks, next_id = load_tasks()
 
     print("\n  TaskFlow v1 running →  http://localhost:5000\n")
     app.run(debug=True)
